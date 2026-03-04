@@ -5,5 +5,3 @@ Console.WriteLine("Hello, World!");
 
 public class Bruker;
 
-
-public class Student : Bruker;
