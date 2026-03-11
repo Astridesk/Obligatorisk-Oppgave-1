@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Obligatorisk_Oppgave_1
 {
-    internal class Meny
+    public class Meny
     {
     }
 }

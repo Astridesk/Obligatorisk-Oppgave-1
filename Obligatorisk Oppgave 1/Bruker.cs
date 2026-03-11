@@ -7,8 +7,10 @@ namespace Obligatorisk_Oppgave_1
     public class Bruker     //hvorfor ikke internal?
     {
         //instansvariabler
-        private string Navn { get; set; } = string.Empty;
+        public string Navn { get; set; } = string.Empty;
         private string Epost {  get; set; } = string.Empty;
+
+        //legg til passord?
 
         //konstruktør med paraametere
         public Bruker(string navn, string epost)
@@ -17,7 +19,7 @@ namespace Obligatorisk_Oppgave_1
             Epost = epost;
         }
 
-        public void SkrivUtInfo()
+        public void SkrivUtInfo()       //trengs denne her? Siden den ikke er i Student-klassen, og det er der vi skal bruke den?
         {
             Console.WriteLine($"Navn: {Navn} \nEpost: { Epost}"); //string interpolation
             
