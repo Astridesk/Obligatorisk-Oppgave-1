@@ -1,7 +1,62 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using System.Xml.Serialization;
 
-Console.WriteLine("Hello, World!");
+using System;
 
-public class Bruker;
+namespace Obligatorisk_Oppgave_1
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Bibliotek bibliotek = new Bibliotek();
+            KursSystem kursSystem = new KursSystem();
 
+            Meny meny = new Meny();
+
+            bool kjører = true;
+
+            while (kjører)
+            {
+                meny.VisMeny();
+
+                string valg = Console.ReadLine();
+
+                switch (valg)
+                {
+                    case "1":
+                        Console.WriteLine("Opprett kurs...");
+                        break;
+
+                    case "2":
+                        Console.WriteLine("Meld student til kurs...");
+                        break;
+
+                    case "3":
+                        kursSystem.PrintKurs();
+                        break;
+
+                    case "5":
+                        Console.WriteLine("Søk bok...");
+                        break;
+
+                    case "6":
+                        Console.WriteLine("Lån bok...");
+                        break;
+
+                    case "7":
+                        Console.WriteLine("Returner bok...");
+                        break;
+
+                    case "8":
+                        Console.WriteLine("Registrer bok...");
+                        break;
+
+                    case "0":
+                        kjører = false;
+                        break;
+                }
+            }
+        }
+    }
+}
