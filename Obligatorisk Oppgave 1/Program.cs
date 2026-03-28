@@ -11,7 +11,7 @@ public class Program
 
     //legg inn alle lister som brukes av hele programmet her:
     static List<Kurs> KursListe = new List<Kurs>();   
-    static List<Student> Studenter = new();    //må ha en måte å legge til studenter på, og en måte å se hvilke studenter som er oppmeldt på kurs     
+    static List<Student> Studenter = new();   
     static Bibliotek bibliotek = new Bibliotek();
     static List<Bok> Bøker = Bok.DefaultBøker();   
 
@@ -76,7 +76,11 @@ public class Program
             }
         }
 
+
+        //--------------------------------------
         //---------------KURS-------------------
+        //--------------------------------------
+
 
         void OpprettKurs()
         {
@@ -98,29 +102,7 @@ public class Program
 
        static void MeldPåEllerAvStudent()
         {
-            //Console.Write("Student ID: ");
-            //int studentID = int.Parse(Console.ReadLine());
-
-            //Console.Write("Kurs kode: ");
-            //string kurskode = Console.ReadLine();
-
-            //Student student = Studenter.FirstOrDefault(s => s.StudentID == studentID);
-            //Kurs kurs = KursListe.FirstOrDefault(k => k.KursKode == kurskode);
-
-            //if (student != null && kurs != null)
-            //{
-            //    if (kurs.HarLedigPlass())
-            //    {
-            //        kurs.Studenter.Add(student);
-            //        kurs.LeggTilStudent(student);
-            //        Console.WriteLine("Student meldt på.");
-            //    }
-            //    else
-            //    {
-            //        Console.WriteLine("Kurset er fullt.");
-            //    }
-
-            //}
+          
             Console.Write("Student ID: ");
             int studentID = int.Parse(Console.ReadLine());
 
@@ -173,7 +155,11 @@ public class Program
             }
         }
 
+
+        //-------------------------------------------
         //-----------------BIBLIOTEK-----------------
+        //-------------------------------------------
+
 
         void RegistrerBok()
         {

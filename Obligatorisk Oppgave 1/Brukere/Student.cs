@@ -6,11 +6,13 @@ namespace Obligatorisk_Oppgave_1
 {
     public class Student : Bruker
     {
-        public int StudentID { get; set; }      //hvorfor ikke private?? 
+        public int StudentID { get; init; }     
 
         public Student(string navn, string epost, int studentID)
         {
             StudentID = studentID;
+            Navn = navn;
+            Epost = epost;
         }
 
         //Default studenter

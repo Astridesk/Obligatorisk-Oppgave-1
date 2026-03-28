@@ -6,7 +6,7 @@ namespace Obligatorisk_Oppgave_1
 {
     public class Bok
     {
-        public int BokID { get; set; } 
+        public int BokID { get; init; } 
         public string Tittel { get; set; }
         public string Forfatter { get; set; } 
         public int År { get; set; } 

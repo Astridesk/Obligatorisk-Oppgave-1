@@ -10,7 +10,7 @@ namespace Obligatorisk_Oppgave_1
     {
         public Bruker Låner { get; set; }
         public Bok Bok { get; set; }
-        public DateTime Lånedato { get; set; }
+        public DateTime Lånedato { get; init; }
         public bool Returnert { get; set; }
         public Lån(Bruker låner, Bok bok)
         {

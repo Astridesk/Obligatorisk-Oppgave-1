@@ -13,7 +13,7 @@ namespace Obligatorisk_Oppgave_1
         public int Studiepoeng { get; set; }
         public int MaksAntallPlasser { get; set; }
 
-        public List<Student> Studenter { get; set; } = new();
+        public List<Student> Studenter { get; private set; } = new();
        
         
 
