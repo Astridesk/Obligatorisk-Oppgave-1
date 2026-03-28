@@ -4,68 +4,54 @@ using System.Text;
 
 namespace Obligatorisk_Oppgave_1
 {
-    public class Kurs           //Modellerer ett kurs. Har operasjoner for å melde på og av studenter, sjekke ledige plasser, og printe ut kursinformasjon.
+//Inneholder Kurs-klassen og defaultkurs.
+//
+    public class Kurs           
     {
         public string KursKode { get; set; }
         public string KursNavn { get; set; }
         public int Studiepoeng { get; set; }
         public int MaksAntallPlasser { get; set; }
-        static List<Kurs> KursListe { get; set; }
 
         public List<Student> Studenter { get; set; }
+       
+        
 
-        public Kurs(string kurskode, string kursnavn, int studiepoeng, int maksAntallPlasser, List<Kurs> kursListe)
+        public Kurs(string kurskode, string kursnavn, int studiepoeng, int maksAntallPlasser)
         {
             KursKode = kurskode;
             KursNavn = kursnavn;
             Studiepoeng = studiepoeng;
-            MaksAntallPlasser = maksAntallPlasser;
+            MaksAntallPlasser = maksAntallPlasser;      
+
             Studenter = new List<Student>();
-            
+
         }
 
-        public Kurs(string? kurskode, string? kursnavn, int studiepoeng, int maksAntallPlasser)
+        public static List<Kurs> DefaultKurs()      //må ha antall ledige plasser
         {
-            KursKode = kurskode;
-            KursNavn = kursnavn;
-            Studiepoeng = studiepoeng;
-            MaksAntallPlasser = maksAntallPlasser;
+            return new List<Kurs>
+            {
+                new Kurs("IS-110", "Objektorientert programmering", 10, 30),
+                new Kurs("IS-105", "Datasystemer og systemarkitektur", 10, 30)
+            };
         }
 
-        static void OpprettKurs()
+
+
+        public bool HarLedigPlass()
         {
-            Console.Write("Kode: ");
-            string kurskode = Console.ReadLine();
-
-            Console.Write("Navn: ");
-            string kursnavn = Console.ReadLine();
-
-            Console.Write("Studiepoeng: ");
-            int studiepoeng = int.Parse(Console.ReadLine());
-
-            Console.Write("Maks plasser: ");
-            int maksAntallPlasser = int.Parse(Console.ReadLine());
-
-            KursListe.Add(new Kurs(kurskode, kursnavn, studiepoeng, maksAntallPlasser));
+            return Studenter.Count < MaksAntallPlasser;
         }
 
-
-        public bool MeldPåStudent(Student student)
+        public bool LeggTilStudent(Student student)
         {
-            if (Studenter.Count >= MaksAntallPlasser)
-                return false;
-            
-
-            Studenter.Add(student);
-            student.KursListe.Add(this);
-            return true;                
-         
-        }
-        public void MeldAvStudent(Student student)
-        {    
-            Studenter.Remove(student);
-            student.KursListe.Remove(this);
-           
+            if (HarLedigPlass())
+            {
+                Studenter.Add(student);
+                return true;
+            }
+            return false;
         }
 
 

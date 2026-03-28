@@ -23,28 +23,40 @@ namespace Obligatorisk_Oppgave_1
                
         }
 
-
-        public bool Ledig()
+        public static List<Bok> DefaultBøker()
         {
-            return Antall > 0;
-        }
-
-        public void LånUt()
-        {
-            if (Ledig())
+            return new List<Bok>
             {
-                Antall--;
-            }
-
+                new Bok(1, "1984", "George Orwell", 1949, 2),
+                new Bok(2, "The Silmarillion", "J.R.R. Tolkien", 1977, 1),
+                new Bok(3, "The Mysterious Affair at Styles", "Agatha Christie", 1920, 2)
+            };
         }
 
-        public void Returner()
-        {
-            Antall++;
-        }
-        public string SkrivUtInfo()
-        {
-            return $"BokID: {BokID} \nTittel: {Tittel} \nForfatter: {Forfatter} \nÅr: {År} \nAntall Eksemplarer: {Antall}";
-        }
+
+        //legg låning over til biblitek klassen.
+
+        //public bool Ledig()
+        //{
+        //    return Antall > 0;
+        //}
+
+        //public void LånUt()
+        //{
+        //    if (Ledig())
+        //    {
+        //        Antall--;
+        //    }
+
+        //}
+
+        //public void Returner()
+        //{
+        //    Antall++;
+        //}
+        //public string SkrivUtInfo()
+        //{
+        //    return $"BokID: {BokID} \nTittel: {Tittel} \nForfatter: {Forfatter} \nÅr: {År} \nAntall Eksemplarer: {Antall}";
+        //}
     }
 }

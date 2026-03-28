@@ -4,11 +4,30 @@ using System.Text;
 
 namespace Obligatorisk_Oppgave_1
 {
-    public class Bibliotek
+    //koble bok og bruker/Låner, utlån/innlevering, tilgjengelighet, og historikk
+
+    public class Lån      //skal denne i en egen klasse? eller skal den være en del av biblioteket?
+    {
+        public Bruker Låner { get; set; }
+        public Bok Bok { get; set; }
+        public DateTime Lånedato { get; set; }
+        public bool Returnert { get; set; }
+        public Lån(Bruker låner, Bok bok)
+        {
+            Låner = låner;
+            Bok = bok;
+            Lånedato = DateTime.Now;
+            Returnert = false;
+        }
+    }
+
+    public class Bibliotek     
+        
     {
         List<Bok> Bøker = new List<Bok>();
-        List<Bruker> Brukere = new List<Bruker>();
-        List<BibliotekLån> LånListe = new List<BibliotekLån>();
+        List<Bruker> Lånere = new List<Bruker>();
+        List<Lån> LånListe = new List<Lån>();
+
 
         public void RegistrerBok(Bok bok)
         {
@@ -16,58 +35,72 @@ namespace Obligatorisk_Oppgave_1
             Console.WriteLine("Boken er registrert i biblioteket.");
         }
 
-        public void RegistrerBruker(Bruker bruker)
+        public void RegistrerLåner(Bruker bruker)
         {
-            Brukere.Add(bruker);
-            Console.WriteLine("Brukeren er registrert i biblioteket.");
+            Lånere.Add(bruker);
+            Console.WriteLine("Låneren er registrert i biblioteket.");
         }
 
-
-
-        public void LånUtBok(Bok bok, Bruker bruker)       //Liten bok er et objekt?
+        public void SøkBok(List<Bok> bøker)
         {
-            if (!bok.Ledig())
+            Console.Write("Søk tittel: ");
+            string søk = Console.ReadLine();
+
+            var resultat = bøker
+                .Where(b => b.Tittel.Contains(søk, StringComparison.OrdinalIgnoreCase));
+
+            foreach (var bok in resultat)
             {
-                Console.WriteLine("Boken er ikke tilgjengelig for utlån.");
+                Console.WriteLine($"{bok.Tittel} ({bok.Antall} stk)");
+            }
+        }
+
+        public bool Ledig(Bok bok)          
+        {    
+            return bok.Antall > 0;
+            
+        }
+            
+
+        public void LånUt(Bok bok, Bruker låner)
+        {
+            if (Ledig(bok))
+            {
+                bok.Antall--;
+
+                Lån nyttLån = new Lån(låner, bok);
+                LånListe.Add(nyttLån);
             }
             else
             {
-                bok.LånUt();
-
-                BibliotekLån biblioteklån = new BibliotekLån(bok, bruker);
-
-                Console.WriteLine("Boken er lånt ut.");
+                Console.WriteLine("Boken er ikke tilgjengelig for utlån.");
             }
-
 
         }
 
-        public void LeverInnBok(Bok bok, BibliotekLån biblioteklån)
+        public void Returner(Bok bok)
         {
-            foreach (var lån in LånListe)
-            {
-                if (lån.Bok == bok && lån.ReturneringsDato == null)
-                {
-                    lån.ReturneringsDato = DateTime.Now;
-                    bok.Returner();
-                    Console.WriteLine("Boken er levert inn.");
-                    return;
-                }
-            }
+            bok.Antall++;
+        }
+
+        public string SkrivUtInfo(Bok bok)
+        {
+            return $"BokID: {bok.BokID} \nTittel: {bok.Tittel} \nForfatter: {bok.Forfatter} \nÅr: {bok.År} \nAntall Eksemplarer: {bok.Antall}";
         }
 
         public void VisAktiveLån()
         {
-            Console.WriteLine("Aktive lån:");
-            foreach (var biblioteklån in LånListe)
+            foreach (var lån in LånListe)
             {
-                if (biblioteklån.ReturneringsDato == null)
+                if (!lån.Returnert)
                 {
-                    Console.WriteLine($"Bok: {biblioteklån.Bok.Tittel}, Lånt av: {biblioteklån.bruker.Navn}, Lånedato: {biblioteklån.LåneDato}");
+                    Console.WriteLine($"Låner: {lån.Låner.Navn}, Bok: {lån.Bok.Tittel}, Lånedato: {lån.Lånedato}");
                 }
             }
+
+
         }
-        
-        
+
+
     }
 }

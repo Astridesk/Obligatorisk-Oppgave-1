@@ -6,13 +6,21 @@ namespace Obligatorisk_Oppgave_1
 {
     public class Student : Bruker
     {
-        public int StudentID { get; set; }
-        public List<Kurs> KursListe { get; set; }
+        public int StudentID { get; set; }      //hvorfor ikke private?? 
 
-        public Student (string navn, string epost, int studentID) : base(navn, epost)  //hvorfor navn og epost 2 ganger?
+        public Student(string navn, string epost, int studentID)
         {
             StudentID = studentID;
-            KursListe = new List<Kurs>();
+        }
+
+        //Default studenter
+
+        public static List<Student> DefaultStudent()
+        {
+            return new List<Student>
+            {
+                new Student("Ola Nordmann", "ola.nordmann@uia.no", 12345)
+            };
         }
     }
 }

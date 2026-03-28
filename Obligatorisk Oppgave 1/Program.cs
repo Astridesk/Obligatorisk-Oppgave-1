@@ -6,17 +6,23 @@ using System.Linq;
 
 using Obligatorisk_Oppgave_1;
 
-internal class Program
+public class Program
 {
+
+    //legg inn alle lister som brukes av hele programmet her:
+    static List<Kurs> KursListe = new List<Kurs>();   
+    static List<Student> Studenter = Student.DefaultStudent();     //må ha en måte å legge til studenter på, og en måte å se hvilke studenter som er oppmeldt på kurs   
+    static Bibliotek bibliotek = new Bibliotek();
+
+
     private static void Main(string[] args)
     {
-        UniversitetSystem system = new UniversitetSystem();
 
         Meny meny = new Meny();
 
         bool kjører = true;
 
-        while (kjører)
+        while (kjører)      
         {
             meny.VisMeny();
 
@@ -25,35 +31,35 @@ internal class Program
             switch (valg)
             {
                 case "1":
-                    OpprettKurs(system);
+                    KursService.OpprettKurs(KursListe);
                     break;
 
                 case "2":
-                    MeldPåStudent(system);
+                    KursService.MeldPåEllerAvStudent();
                     break;
 
                 case "3":
-                    PrintKurs(system);
+                    KursService.SkrivUtKursOgStudentInfo();
                     break;
 
                 case "4":
-                    SøkKurs(system);
+                    KursService.SøkKurs();
                     break;
 
                 case "5":
-                    SøkBok(system);
+                    bibliotek.SøkBok(bøker);
                     break;
 
                 case "6":
-                    LånBok(system);
+                    bibliotek.LånUt();      //må sende bok + låner
                     break;
 
                 case "7":
-                    ReturnerBok(system);
+                    bibliotek.Returner();
                     break;
 
                 case "8":
-                    RegistrerBok(system);
+                    bibliotek.RegistrerBok();
                     break;
 
                 case "0":
@@ -61,7 +67,9 @@ internal class Program
             }
         }
 
-        void OpprettKurs(UniversitetSystem system)
+        //---------------KURS-------------------
+
+        void OpprettKurs(KursService allekurs)
         {
             Console.Write("Kode: ");
             string kurskode = Console.ReadLine();
@@ -75,10 +83,10 @@ internal class Program
             Console.Write("Maks plasser: ");
             int maksAntallPlasser = int.Parse(Console.ReadLine());
 
-            system.KursListePublic.Add(new Kurs(kurskode, kursnavn, studiepoeng, maksAntallPlasser));
+            KursListe.Add(new Kurs(kurskode, kursnavn, studiepoeng, maksAntallPlasser));
         }
 
-        void MeldPåStudent(UniversitetSystem system)
+       static void MeldPåEllerAvStudent(KursService system)
         {
             Console.Write("Student ID: ");
             int studentID = int.Parse(Console.ReadLine());
@@ -86,23 +94,27 @@ internal class Program
             Console.Write("Kurs kode: ");
             string kurskode = Console.ReadLine();
 
-            Student student = system.Studenter.FirstOrDefault(s => s.StudentID == studentID);
-            Kurs kurs = UniversitetSystem.KursListe.FirstOrDefault(k => k.KursKode == kurskode);
+            Student student = Studenter.FirstOrDefault(s => s.StudentID == studentID);
+            Kurs kurs = KursListe.FirstOrDefault(k => k.KursKode == kurskode);
 
             if (student != null && kurs != null)
             {
-                bool ok = kurs.MeldPåStudent(student);
-
-                if (ok)
-                    Console.WriteLine("Student meldt på kurs.");
+                if (kurs.HarLedigPlass())
+                {
+                    kurs.Studenter.Add(student);
+                    Console.WriteLine("Student meldt på.");
+                }
                 else
+                {
                     Console.WriteLine("Kurset er fullt.");
+                }
+
             }
         }
 
-        void PrintKurs(UniversitetSystem system)
+        static void PrintKurs()
         {
-            foreach (var kurs in UniversitetSystem.KursListe)
+            foreach (var kurs in KursListe)
             {
                 Console.WriteLine(kurs.KursKode + " - " + kurs.KursNavn);
 
@@ -113,12 +125,12 @@ internal class Program
             }
         }
 
-        void SøkKurs(UniversitetSystem system)
+        void SøkKurs()
         {
             Console.Write("Søk: ");
             string søk = Console.ReadLine();
 
-            var resultat = UniversitetSystem.KursListe
+            var resultat = KursListe
                 .Where(k => k.KursKode.Contains(søk) || k.KursNavn.Contains(søk));
 
             foreach (var kurs in resultat)
@@ -127,10 +139,12 @@ internal class Program
             }
         }
 
-        void RegistrerBok(UniversitetSystem system)
+        //-----------------BIBLIOTEK-----------------
+
+        void RegistrerBok()
         {
             Console.Write("ID: ");
-            int bokID = int.Parse(Console.ReadLine() ?? "0");
+            int bokID = int.Parse(Console.ReadLine());
 
             Console.Write("Tittel: ");
             string tittel = Console.ReadLine() ?? string.Empty;
@@ -139,68 +153,59 @@ internal class Program
             string forfatter = Console.ReadLine() ?? string.Empty;
 
             Console.Write("År: ");
-            int år = int.Parse(Console.ReadLine() ?? "0");
+            int år = int.Parse(Console.ReadLine());
 
             Console.Write("Antall: ");
-            int antall = int.Parse(Console.ReadLine() ?? "0");
+            int antall = int.Parse(Console.ReadLine());
 
-            system.Boker.Add(new Bok(bokID, tittel, forfatter, år, antall));
+            Bøker.Add(new Bok(bokID, tittel, forfatter, år, antall));
         }
 
-        void SøkBok(UniversitetSystem system)
+        void SøkBok()
         {
             Console.Write("Søk tittel: ");
             string søk = Console.ReadLine();
+            bibliotek.SøkBok(søkBok)
 
-            var resultat = system.Boker.Where(b => b.Tittel.Contains(søk));
+            var resultat = Bøker.Where(b => b.Tittel.Contains(søk, StringComparison.OrdinalIgnoreCase));
 
             foreach (var bok in resultat)
             {
-                Console.WriteLine(bok);
+                Console.WriteLine($"{bok.Tittel} ({bok.Antall} stk)");
             }
         }
 
-        void LånBok(UniversitetSystem system)
+        void LånBok(Bok bok, Bruker bruker)
         {
             Console.Write("Bok ID: ");
             int bokID = int.Parse(Console.ReadLine());
 
-            Bok bok = system.Boker.FirstOrDefault(b => b.BokID == bokID);
+            bok = bøker.FirstOrDefault(b => b.BokID == bokID);
 
-            if (bok != null && bok.Antall > 0)
+            if (bok != null && bok.Antall > 0)      
             {
-                Bruker bruker = system.Studenter.First();
-
-                BibliotekLån lån = new BibliotekLån(bok, bruker);
-                lån.LånUt();
-                HentLånListe(system).Add(lån);
-
+                bibliotek.LånUt(bok, bruker);
                 Console.WriteLine("Bok lånt ut.");
             }
             else
             {
                 Console.WriteLine("Ingen eksemplarer tilgjengelig.");
             }
+           
         }
 
-        void ReturnerBok(UniversitetSystem system)
+        void Returner()
         {
             Console.Write("Bok ID: ");
             int bokID = int.Parse(Console.ReadLine());
 
-            var lån = system.LånListePublic
-                .FirstOrDefault(l => l.Bok.BokID == bokID && !l.Returnert);
+            Bok bok = Bøker.FirstOrDefault(b => b.BokID == bokID);
 
-            if (lån != null)
+            if (bok != null)
             {
-                lån.Returner();
+                bibliotek.Returner(bok);
                 Console.WriteLine("Bok returnert.");
             }
         }
-    }
-
-    private static List<BibliotekLån> HentLånListe(UniversitetSystem system)
-    {
-        return system.LånListePublic;
     }
 }

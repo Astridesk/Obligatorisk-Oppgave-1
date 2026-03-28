@@ -10,11 +10,19 @@ namespace Obligatorisk_Oppgave_1
         public string Stilling { get; set; }
         public string Avdeling { get; set; }
 
-        public Ansatt(string navn, string epost, int ansattid, string stilling, string avdeling) : base(navn, epost)  
+        public Ansatt(string navn, string epost, int ansattID, string stilling, string avdeling)    //base???
         {
-            AnsattID = ansattid;
+            AnsattID = ansattID;
             Stilling = stilling;
             Avdeling = avdeling;
+        }
+
+        public static List<Ansatt> DefaultAnsatte()
+        {
+            return new List<Ansatt>
+            {
+                new Ansatt("Kinger", "kinger@uia.no", 12, "Professor", "institutt for informasjonssystemer")
+            };
         }
     }
 }
