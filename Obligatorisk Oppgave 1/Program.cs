@@ -18,9 +18,12 @@ public class Program
 
     private static void Main(string[] args)
     {
+        //legg in spørsmål om eksisterende bruker her, og registrer ny bruker eller logg inn.
+
+
         Studenter.Add(new Student("Ola", "ola@epost", 1));
 
-
+        //hvilken meny som vises avhenger av type bruker som logger inn.
         Meny meny = new Meny();
 
         bool kjører = true;

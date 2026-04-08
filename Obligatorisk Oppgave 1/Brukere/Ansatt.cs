@@ -21,7 +21,7 @@ namespace Obligatorisk_Oppgave_1
         {
             return new List<Ansatt>
             {
-                new Ansatt("Kinger", "kinger@uia.no", 12, "Professor", "institutt for informasjonssystemer")
+                new Ansatt("Kinger", "kinger@uia.no", 120, "Professor", "institutt for informasjonssystemer")
             };
         }
     }

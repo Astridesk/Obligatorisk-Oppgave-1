@@ -5,6 +5,13 @@ using System.Text;
 namespace Obligatorisk_Oppgave_1
     {
         public class Meny
+
+        /*lag menyer for de ulike brukerne
+        *en ansatt
+        *en bibliotekar
+        *en student
+        *en admin?
+        */
         {
             public void VisMeny()
             {

@@ -6,13 +6,16 @@ namespace Obligatorisk_Oppgave_1
 {
     public class Student : Bruker
     {
-        public int StudentID { get; init; }     
+        public int StudentID { get; init; } 
+        public string Karakter { get; set }
 
-        public Student(string navn, string epost, int studentID)
+        public Student(string navn, string epost, string brukernavn, int studentID, string karakter)
         {
             StudentID = studentID;
             Navn = navn;
             Epost = epost;
+            Karakter = karakter;        /*kan karakter være her? siden en student kan ha flere kurs,
+                                         * og derfor flere karakterer. Koble kurs og karakter?*/
         }
 
         //Default studenter
@@ -21,7 +24,7 @@ namespace Obligatorisk_Oppgave_1
         {
             return new List<Student>
             {
-                new Student("Ola Nordmann", "ola.nordmann@uia.no", 12345)
+                new Student("Ola Nordmann", "ola.nordmann@uia.no", "OlaNor", 12345, /*karakter*/ )
             };
         }
     }
