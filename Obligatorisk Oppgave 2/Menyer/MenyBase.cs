@@ -8,7 +8,7 @@ namespace Obligatorisk_Oppgave_2
 
     {
         public abstract void Vis();
-        public abstract void BehandleValg(string valg);
+        public abstract bool BehandleValg(string valg, Bruker innlogget);
     }
 }
 

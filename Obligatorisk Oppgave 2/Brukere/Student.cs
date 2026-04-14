@@ -7,26 +7,21 @@ namespace Obligatorisk_Oppgave_2
     public class Student : Bruker
     {
         public int StudentID { get; init; }
-        public string Karakter { get; set }
-        public override string Rolle => "Student";
+        public Dictionary<Kurs, string> Karakterer { get; } = new();        //med dictionary kan student ha flere kurs og karakterer.
+        public List<Kurs> KursListe { get; } = new();
 
-        public Student(string navn, string epost, string brukernavn, int studentID, string karakter)
+        public Student(string navn, string epost, string brukernavn, string passord, int studentID)
         {
-            StudentID = studentID;
             Navn = navn;
             Epost = epost;
-            Karakter = karakter;        /*kan karakter være her? siden en student kan ha flere kurs,
-                                         * og derfor flere karakterer. Koble kurs og karakter?*/
+            Brukernavn = brukernavn;
+            Passord = passord;
+            StudentID = studentID;
+            Rolle = Rolle.Student;
         }
 
         //Default studenter
 
-        public static List<Student> DefaultStudent()
-        {
-            return new List<Student>
-            {
-                new Student("Ola Nordmann", "ola.nordmann@uia.no", "OlaNor", 12345, /*karakter*/ )
-            };
-        }
+        
     }
 }

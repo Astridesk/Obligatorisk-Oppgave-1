@@ -9,21 +9,20 @@ namespace Obligatorisk_Oppgave_2
         public int AnsattID { get; set; }
         public string Stilling { get; set; }
         public string Avdeling { get; set; }
-        public override string Rolle => "Ansatt";
 
-        public Ansatt(string navn, string epost, int ansattID, string stilling, string avdeling)    //base???
+        public Ansatt(string navn, string epost, string brukernavn, string passord,
+                  int ansattID, string stilling, string avdeling)
         {
+            Navn = navn;
+            Epost = epost;
+            Brukernavn = brukernavn;
+            Passord = passord;
             AnsattID = ansattID;
             Stilling = stilling;
             Avdeling = avdeling;
+            Rolle = Rolle.Ansatt;
         }
 
-        public static List<Ansatt> DefaultAnsatte()
-        {
-            return new List<Ansatt>
-            {
-                new Ansatt("Kinger", "kinger@uia.no", 120, "Professor", "institutt for informasjonssystemer")
-            };
-        }
+        
     }
 }

@@ -8,4 +8,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="ProgramOppg1.cs" />
+	<Compile Remove="Oppgave1\*.cs" />
+  </ItemGroup>
+
 </Project>

@@ -10,8 +10,16 @@ namespace Obligatorisk_Oppgave_2
         public string HjemLand { get; set; }
         public string Periode { get; set; }        //(fra-til)
 
-
-        public UtvekslingsStudent(string navn, string epost, int studentID, string hjemuniversitet, string hjemland, string periode) : base(navn, epost, studentID)     //public eller private?
+        public UtvekslingsStudent(
+            string navn,
+            string epost,
+            string brukernavn,
+            string passord,
+            int studentID,
+            string hjemuniversitet,
+            string hjemland,
+            string periode)
+            : base(navn, epost, brukernavn, passord, studentID)
         {
             HjemUniversitet = hjemuniversitet;
             HjemLand = hjemland;
@@ -22,7 +30,15 @@ namespace Obligatorisk_Oppgave_2
         {
             return new List<UtvekslingsStudent>
                 {
-                    new UtvekslingsStudent("Itachi Uchiha", "itachi.uchiha@uia.no", 54321, "University of Konohagakure", "Land of Fire", "høst 2026-vår2027")
+                    new UtvekslingsStudent(
+                        "Itachi Uchiha",
+                        "itachi.uchiha@uia.no",
+                        "itachi.uchiha",
+                        "defaultPass",
+                        54321,
+                        "University of Konohagakure",
+                        "Land of Fire",
+                        "høst 2026-vår2027")
                 };
         }
     }

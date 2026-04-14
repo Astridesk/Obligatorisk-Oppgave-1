@@ -15,15 +15,17 @@ namespace Obligatorisk_Oppgave_2.Menyer
             Console.WriteLine("[3] Meld student til kurs");
             Console.WriteLine("[4] Print kurs og deltagere");
             Console.WriteLine("[5] Sett karakter");
+            Console.WriteLine("[6] Registrer pensum");
 
-            Console.WriteLine("[6] Søk på bok");
-            Console.WriteLine("[7] Returner bok");
+            Console.WriteLine("[7] Søk på bok");
+            Console.WriteLine("[8] Lån bok");
+            Console.WriteLine("[9] Returner bok");
 
             Console.WriteLine("[0] Logg ut");
 
         }
 
-        public override void BehandleValg(string valg)
+        public override bool BehandleValg(string valg, Bruker innlogget)
         {
             switch (valg)
             {
@@ -31,29 +33,39 @@ namespace Obligatorisk_Oppgave_2.Menyer
                     Program.OpprettKurs();
                     break;
                 case "2":
-                    Program.SøkKurs();
+                    Kurs.SøkKurs();
                     break;
                 case "3":
                     Program.MeldPåEllerAvStudent();
                     break;
                 case "4":
-                    Program.SkrivUtKursOgStudentInfo();
+                    Kurs.SkrivUtKursOgStudentInfo();
                     break;
                 case "5":
-                    Console.WriteLine("Karaktersetting mangler.");
+                    Program.SettKarakter();
                     break;
                 case "6":
-                    Program.SøkBok();
+                    Program.RegistrerPensum();
                     break;
                 case "7":
-                    Program.Returner();
+                    Program.bibliotek.SøkBok();
+                    break;
+                case "8":
+                    Program.LånBok(innlogget);
+                    break;
+                case "9":
+                    Program.Returner(innlogget);
                     break;
                 case "0":
-                    Environment.Exit(0);
+                    return false;
+                default:
+                    Console.WriteLine("Ugyldig valg.");
                     break;
             }
-
+            return true;
         }
+
+        
 
     }
 }

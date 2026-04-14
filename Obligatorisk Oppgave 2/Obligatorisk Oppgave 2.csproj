@@ -6,6 +6,13 @@
     <RootNamespace>Obligatorisk_Oppgave_2</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+   
   </PropertyGroup>
-
+	<ItemGroup>
+		<!-- Ignorer alle filer fra Oppgave 1 -->
+		<Compile Remove="Obligatorisk_Oppgave_1\*.cs" />
+		<Compile Remove="ProgramOppg1.cs" />
+		<Compile Remove="Obligatorisk_Oppgave_1\**\*.cs" />
+		<Compile Remove="Old_*.cs" />
+	</ItemGroup>
 </Project>

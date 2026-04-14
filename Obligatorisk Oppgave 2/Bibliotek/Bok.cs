@@ -23,7 +23,7 @@ namespace Obligatorisk_Oppgave_2
 
         }
 
-        public static List<Bok> DefaultBøker()
+        public static List<Bok> Bøker()
         {
             return new List<Bok>
             {
